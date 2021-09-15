@@ -4,9 +4,8 @@
 const URL_IMG = "./images/";
 $title = "Главная страница - страница обо мне";
 $header = "Информация обо мне";
-$current_year = date ( 'Y');
+$current_year = date('Y');
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
