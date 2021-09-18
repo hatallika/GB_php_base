@@ -26,7 +26,7 @@ if ($a * $b > 0) {
 }
 
 // Способ 2: сразу учесть все случаи для каждого из 3 состояний. И переменные заданы через функцию
-echo f3(0,2);
+f3(0,2);
 function f3($a, $b) {
 
     if (($a*$b < 0) || ($a*$b == 0 && ($a < 0 || $b < 0 ))){
@@ -41,6 +41,22 @@ function f3($a, $b) {
     }
 }
 echo "<br>";
+
+// Задача 1: Разбор преподавателя
+$a = rand(-10, 10);
+$a = rand(-10, 10);
+
+echo "a = {$a} b = {$b} <br>";
+
+if($a >= 0 && $b >= 0) {
+    echo "a и б положительные";
+} elseif ($a < 0 && $b < 0) {
+    echo "a и б отрицательные";
+} else {
+    echo "a и б разных знаков";
+}
+
+
 
 /*Задача2:
 2. Присвоить переменной $а значение в промежутке [0..15].
@@ -75,13 +91,28 @@ $a = rand(0,15);
 echo "Число: " . $a . "<br>";
 n_to_15($a,15);
 
-function n_to_15($n, $i){
-
+function n_to_15($n, $i)
+{
     if ($n <= 15) {
         $n++;
         n_to_15($n,$i - 1);
         echo ($i) . " ";
     }
+}
+
+//Разбор
+$a = rand(0,15);
+
+function echo_val($a) {
+    echo "$a";
+    $a++;
+    if ($a != 15) echo_val($a);
+}
+echo_val($a);
+
+function echo_val2($a) {
+    echo "$a";
+    if ($a != 15) echo_val(++$a);
 }
 
 /* Задача 3. Реализовать основные 4 арифметические операции в виде функций с двумя параметрами.
@@ -98,6 +129,8 @@ function mul($x, $y) {
     return $x * $y;
 }
 function div($x, $y) {
+
+    // return ($y === 0) ? "На ноль делить нельзя.": round($x / $y, 2);
     if ($y !== 0) {
         return round($x / $y, 2);
     } else {
@@ -116,10 +149,10 @@ echo div(2, 0);
 */
 function mathOperation($arg1, $arg2, $operation) {
     switch ($operation){
-        case 'add': return add($arg1, $arg2); break;
-        case 'sub': return sub($arg1, $arg2); break;
-        case 'mul': return mul($arg1, $arg2); break;
-        case 'div': return div($arg1, $arg2); break;
+        case 'add': return add($arg1, $arg2);
+        case 'sub': return sub($arg1, $arg2);
+        case 'mul': return mul($arg1, $arg2);
+        case 'div': return div($arg1, $arg2);
         default: return "Нет такой операции " . $operation;
     }
 }
@@ -177,3 +210,21 @@ function current_time(){
     return $hours . $h_text . " " . $minuts . $m_text;
 }
 echo current_time();
+
+//Разбор
+
+//Проверка значений
+for ($i = 0; $i <= 23; $i++) {
+echo $i . " " . getWord($i, "часов", "час", "часа") . "<br>";
+}
+
+function getWord($number, $word1="минут", $word2, $word3) {
+    if ($number >= 10 && $number <= 19) return $word1;
+        switch ($number % 10){
+            case 1: return $word2;
+            case 2:
+            case 3:
+            case 4: return $word3;
+            default : return $word1;
+        }
+}
