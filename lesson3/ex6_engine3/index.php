@@ -53,7 +53,7 @@ function getCatalog()
  ];
 }
 
-//2 способ пробросить tittle
+//2 способ пробросить tittle через функцию для render. Тут еще вместо case можно хранение соответствий в массиве организовать.
 /*function getTitle($page){
     switch($page){
     case 'index': return "Главная";
@@ -64,11 +64,10 @@ function getCatalog()
 }
 */
 
-
 // ядро
 function render($page, $params = []){
     return renderTemplate(LAYOUTS_DIR . 'main', [
-            'menu' => renderTemplate('menu', $params ),
+            'menu' => renderTemplate('menu2', $params ),
             'content' => renderTemplate($page, $params),
             'title' => $params['title']
             //'title' => getTitle($page)// 2 способ пробросить tittle
@@ -76,7 +75,6 @@ function render($page, $params = []){
     );
 
 }
-
 
 //$params = ['menu' => 'код меню', 'catalog' => ['чай'], 'content' => 'Код шаблона']
 function renderTemplate($page, $params = []) {
@@ -88,4 +86,3 @@ function renderTemplate($page, $params = []) {
     include TEMPLATE_DIR . $page .".php";
     return ob_get_clean();
 }
-
