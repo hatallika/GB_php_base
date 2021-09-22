@@ -3,13 +3,54 @@
 define('TEMPLATE_DIR', 'templates/');
 define('LAYOUTS_DIR', 'layouts/');
 
+$menuItems = [
+    [
+        'url' => '/?page=index',
+        'name' => 'Главная'
+    ],
+    [
+        'url' => '/?page=catalog',
+        'name' => 'Каталог'
+    ],
+    [
+        'url' => '/?page=catalogspa',
+        'name' => 'Каталог SPA'
+    ],
+
+    [
+        'url' => '/?page=about',
+        'name' => 'О нас'
+    ],
+    [
+        'url' => '/?page=ex',
+        'name' => 'Упражнения',
+        'submenu' => [
+            [
+                'url' => '/?page=ex#1',
+                'name' => 'Упражнение1'
+            ],
+            [
+                'url' => '/?page=ex#2',
+                'name' => 'Упражнение2'
+            ],
+            [
+                'url' => '/?page=ex#3',
+                'name' => 'Упражнение3'
+            ],
+        ]
+    ]
+
+];
+
 $page = 'index';
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 
 //фреймворк
-$params = [];
+$params = [
+    'menu' => $menuItems
+];
 
 switch ($page) {
     case 'index':
@@ -65,9 +106,26 @@ function getCatalog()
 */
 
 // ядро
+function renderMenu($arrMenu){
+
+    $str = '<ul>';
+    foreach ($arrMenu as $item){
+        $str .= '<li><a href="'. $item['url'] .'">'. $item['name'] .'</a>';
+
+        if (isset($item['submenu'])) {
+            $str .= renderMenu($item['submenu']);
+        }
+        $str .= '</li>'."\n";
+    }
+
+    $str .= '</ul>'."\n";
+    return $str;
+}
+
+
 function render($page, $params = []){
     return renderTemplate(LAYOUTS_DIR . 'main', [
-            'menu' => renderTemplate('menu2', $params ),
+            'menu' => '<div class="menu">'. renderMenu($params['menu']) . '</div>',
             'content' => renderTemplate($page, $params),
             'title' => $params['title']
             //'title' => getTitle($page)// 2 способ пробросить tittle
