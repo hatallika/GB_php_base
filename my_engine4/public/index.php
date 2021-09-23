@@ -1,6 +1,7 @@
 <?php
 //$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT']; // добавили абсолютный путь //__DIR__ //dirname(__DIR__)
-include "../config/config.php"; // подключили файл конфигурации
+$DOCUMENT_ROOT = dirname(__DIR__);
+include $DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации
 
 $page = 'index';
 if (isset($_GET['page'])) {
@@ -9,7 +10,8 @@ if (isset($_GET['page'])) {
 
 //фреймворк
 $params = [
-    'menu' => $menuItems
+    'menu' => $menuItems,
+    'layout' => 'main'
 ];
 
 switch ($page) {
@@ -23,6 +25,7 @@ switch ($page) {
     case 'gallery':
         $params['title'] = "Галлерея";
         $params['files'] = getGallery();
+        $params['layout'] = 'gallery_layout';
         break;
     case 'catalog':
         $params['title'] = "Каталог";
@@ -39,5 +42,6 @@ switch ($page) {
         $params['title'] = "Упражнения Урок 3";
 }
 //_log($params, 'params');
+//var_dump($params);
 echo render($page, $params);
 

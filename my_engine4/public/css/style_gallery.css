@@ -1,10 +1,9 @@
 body {
-	background: #444 url('img/body.jpg');
+	background: #444 url('../img/body.jpg');
 	color: #444;
-	font: normal 1.2em Verdana,Arial,sans-serif;
+	font: normal 1em Verdana,Arial,sans-serif;
 	height: 100%;
 	padding-bottom: 1px;
-	padding-top: 64px;
 }
 .gallery img{
 	margin:5px;
@@ -15,7 +14,7 @@ a.photo:hover img{
 }
 #main {
 	width:858px;
-	margin:0 auto;
+	margin:50px auto;
 	background: #4A4A4A;
 	color: #CCC;
 }

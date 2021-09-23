@@ -3,12 +3,12 @@ define('TEMPLATE_DIR', '../templates/');
 define('LAYOUTS_DIR', 'layouts/');
 
 //TODO попробовать сделать эти пути абсолютными
-include "../engine/functions.php";
-include "../engine/catalog.php";
-include "../engine/menu.php";
-include "../engine/log.php";
-include "../engine/files.php";
-include "../engine/gallery.php";
+include $DOCUMENT_ROOT . "/engine/functions.php";
+include $DOCUMENT_ROOT . "/engine/catalog.php";
+include $DOCUMENT_ROOT . "/engine/menu.php";
+include $DOCUMENT_ROOT . "/engine/log.php";
+include $DOCUMENT_ROOT . "/engine/files.php";
+include $DOCUMENT_ROOT . "/engine/gallery.php";
 
 
 //menu
@@ -47,10 +47,6 @@ $menuItems = [
                 'name' => 'Упражнение3'
             ],
         ]
-    ],
-    [
-        'url' => '/?page=buh',
-        'name' => 'Бугалтерия'
     ],
     [
         'url' => '/?page=gallery',

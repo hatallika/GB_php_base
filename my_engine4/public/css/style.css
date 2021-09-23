@@ -1,12 +1,11 @@
 body {
     background-color: lightgray;
-    font-family: monospace;
-
-}
+    }
 /*------------------------------------*\
 	НАВИГАЦИЯ
 \*------------------------------------*/
 .menu ul{
+    font-family: monospace;
     float:left;
     width:100%;
     list-style:none;
@@ -14,6 +13,7 @@ body {
     margin-bottom:10px;
 }
 .menu ul li{
+    font-family: monospace;
     float:left;
     margin-right:10px;
     position:relative;
