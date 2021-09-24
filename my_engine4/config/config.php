@@ -8,7 +8,7 @@ include $DOCUMENT_ROOT . "/engine/catalog.php";
 include $DOCUMENT_ROOT . "/engine/menu.php";
 include $DOCUMENT_ROOT . "/engine/log.php";
 include $DOCUMENT_ROOT . "/engine/files.php";
-include $DOCUMENT_ROOT . "/engine/gallery.php";
+include $DOCUMENT_ROOT . "/engine/gallery.php"; // модуль галереи
 
 
 //menu
