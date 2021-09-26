@@ -25,6 +25,16 @@ switch ($page) {
         $params['files'] = getFiles();
         break;
 
+    case 'news':
+        $params['news'] = getNews();
+        break;
+
+    case 'onenews':
+        $id = (int)$_GET['id'];
+        $params['news'] = getOneNews($id);
+        var_dump($id);
+        break;
+
     case 'gallery':
         $params['title'] = "Галлерея";
         $params['files'] = getGallery();

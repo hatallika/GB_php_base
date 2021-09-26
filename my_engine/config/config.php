@@ -2,13 +2,21 @@
 define('TEMPLATE_DIR', '../templates/');
 define('LAYOUTS_DIR', 'layouts/');
 
-//TODO попробовать сделать эти пути абсолютными
+/*DB config*/
+define('HOST', 'localhost:3307');
+define('USER', 'test');
+define('PASS', '12345');
+define('DB', 'gb1');
+
+//
 include $DOCUMENT_ROOT . "/engine/functions.php";
 include $DOCUMENT_ROOT . "/engine/catalog.php";
 include $DOCUMENT_ROOT . "/engine/menu.php";
 include $DOCUMENT_ROOT . "/engine/log.php";
 include $DOCUMENT_ROOT . "/engine/files.php";
 include $DOCUMENT_ROOT . "/engine/gallery.php"; // модуль галереи
+include $DOCUMENT_ROOT . "/engine/db.php";
+include $DOCUMENT_ROOT . "/engine/news.php";
 
 
 //menu
@@ -51,6 +59,10 @@ $menuItems = [
     [
         'url' => '/?page=gallery',
         'name' => 'Галлерея'
+    ],
+    [
+        'url' => '/?page=news',
+        'name' => 'Новости'
     ],
 
 ];
