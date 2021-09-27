@@ -35,7 +35,6 @@ switch ($page) {
     case 'onenews':
         $id = (int)$_GET['id'];
         $params['news'] = getOneNews($id);
-        var_dump($id);
         break;
 
     case 'gallery':
@@ -51,6 +50,13 @@ switch ($page) {
         }
         //$message = $messages[$_GET['status']];
         $params['message'] = $messages[$_GET['status']];
+        break;
+
+    case 'oneimage':
+        $id = (int)$_GET['id'];
+        $params['views'] = pageviews($id);
+        $params['files'] = getOneImage($id);
+        $params['layout'] = 'gallery_layout';
         break;
 
     case 'catalog':

@@ -9,7 +9,7 @@
     <script type="text/javascript" src="/scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
     <script type="text/javascript" src="/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <link rel="stylesheet" type="text/css" href="/scripts/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
         $(document).ready(function(){
             $("a.photo").fancybox({
                 transitionIn: 'elastic',
@@ -18,7 +18,7 @@
                 speedOut: 500,
                 hideOnOverlayClick: false,
                 titlePosition: 'over'
-            });	}); </script>
+            });	}); </script> -->
 
 </head>
 

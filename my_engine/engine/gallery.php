@@ -1,6 +1,23 @@
 <?php
 function getGallery(){
-    return array_splice(scandir('gallery_img/small'),2);
+    //return array_splice(scandir('gallery_img/small'),2);
+    // получение имен файлов из базы
+    return getAssocResult("SELECT id, name FROM images");
+}
+
+function getOneImage($id) {
+    return getOneResult("SELECT name FROM images WHERE id =" . $id);
+}
+
+//добавить файл в БД
+function addImageToDB($arr){
+    return executeSql("INSERT INTO images SET name = " . $arr['name'] . ", size = " . $arr['size']);
+}
+
+//увеличить просмотры
+function pageviews($id){
+    executeSql("UPDATE images SET views = views + 1 WHERE id = ". $id);
+    return getOneResult("SELECT views FROM images WHERE id = ". $id);
 }
 
 function uploadGallery(){

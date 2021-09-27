@@ -28,3 +28,22 @@ function executeSql($sql){
     @mysqli_query(getDb(), $sql) or die(mysqli_error(getDb()));
     return mysqli_affected_rows(getDb()); //информация по удалению // сколько
 }
+
+//функция для развертывания дампа.
+function dumpBase(){
+    $db = @mysqli_connect(HOST, USER, PASS, DB)
+        or die("Could not connect: " . mysqli_connect_error());
+    $result = @mysqli_query($db,"SHOW TABLES FROM gb1" ) or die();
+
+    if(mysqli_num_rows($result) === 0) {
+        //Загружаем дамп из папки db
+        $dump = file_get_contents("/db/gb1.sql");
+        $a = 0;
+        while ($b = strpos($dump,';', $a + 1)) {
+            $a = substr($dump, $a + 1, $b - $a);
+            mysqli_query($db, $a);
+            $a = $b;
+        }
+        var_dump("Дамп загружен");
+    }
+}
