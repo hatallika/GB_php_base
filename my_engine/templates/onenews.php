@@ -3,6 +3,6 @@
     <p><?=$news['text']?></p>
 </div>
 <div>
-    <a href="/?page=news">Все новости</a>
+    <a href="/news">Все новости</a>
 </div>
 

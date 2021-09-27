@@ -3,9 +3,12 @@
 $DOCUMENT_ROOT = dirname(__DIR__); //получили путь выше public
 include $DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации
 
-$page = 'index';
-if (isset($_GET['page'])) {
-    $page = $_GET['page'];
+$url_array = explode('/', $_SERVER['REQUEST_URI']);
+
+if ($url_array[1] == "") {
+    $page = 'index';
+} else {
+    $page = $url_array[1];
 }
 
 //фреймворк

@@ -35,7 +35,7 @@ function uploadGallery(){
     } else {
         $message = "error";
     }
-    header("Location: ?page=gallery&status=" . $message);
+    header("Location: gallery/?status=" . $message);
     die();
 }
 

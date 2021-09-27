@@ -22,46 +22,46 @@ include $DOCUMENT_ROOT . "/engine/news.php";
 //menu
 $menuItems = [
     [
-        'url' => '/?page=index',
+        'url' => '/',
         'name' => 'Главная'
     ],
     [
-        'url' => '/?page=catalog',
+        'url' => '/catalog',
         'name' => 'Каталог'
     ],
     [
-        'url' => '/?page=catalogspa',
+        'url' => '/catalogspa',
         'name' => 'Каталог SPA'
     ],
 
     [
-        'url' => '/?page=about',
+        'url' => '/about',
         'name' => 'О нас'
     ],
     [
-        'url' => '/?page=ex',
+        'url' => '/ex',
         'name' => 'Упражнения',
         'submenu' => [
             [
-                'url' => '/?page=ex#1',
+                'url' => '/ex#1',
                 'name' => 'Упражнение1'
             ],
             [
-                'url' => '/?page=ex#2',
+                'url' => '/ex#2',
                 'name' => 'Упражнение2'
             ],
             [
-                'url' => '/?page=ex#3',
+                'url' => '/ex#3',
                 'name' => 'Упражнение3'
             ],
         ]
     ],
     [
-        'url' => '/?page=gallery',
+        'url' => '/gallery',
         'name' => 'Галлерея'
     ],
     [
-        'url' => '/?page=news',
+        'url' => '/news',
         'name' => 'Новости'
     ],
 
