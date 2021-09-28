@@ -1,7 +1,7 @@
 <?php
 //__DIR__ //dirname(__DIR__)
-$DOCUMENT_ROOT = dirname(__DIR__); //получили путь выше public
-include $DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации
+define("DOCUMENT_ROOT", dirname(__DIR__)); //получили путь выше public
+include DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации
 
 $url_array = explode('/', $_SERVER['REQUEST_URI']);
 
@@ -43,7 +43,9 @@ switch ($page) {
         $params['layout'] = 'gallery_layout'; // другой главный шаблон галереи
         $messages = [
             'ok' => 'Файл загружен',
-            'error' => 'Ошибка загрузки'
+            'error' => 'Ошибка загрузки',
+            'error_php' => 'Загрузка php-файлов запрещена!',
+            'error_not_jpg' => 'Можно загружать только jpg-файлы, неверное содержание файла, не изображение.'
         ];
         if (!empty($_FILES)) {
             uploadGallery();
@@ -54,7 +56,8 @@ switch ($page) {
 
     case 'oneimage':
         $id = (int)$_GET['id'];
-        $params['views'] = pageviews($id);
+        addViews($id); // счетчик просмотров
+        $params['views'] = getViews($id);
         $params['files'] = getOneImage($id);
         $params['layout'] = 'gallery_layout';
         break;
@@ -75,6 +78,14 @@ switch ($page) {
 
     case 'ex':
         $params['title'] = "Упражнения Урок 3";
+
+    case 'setup':
+        $params['title'] = "Загрузка из папки";
+        if($_GET['upload'] == 'ok'){
+            uploadImageToDB();
+        }
+
+
 }
 //_log($params, 'params');
 echo render($page, $params);

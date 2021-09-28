@@ -8,15 +8,19 @@ define('USER', 'test');
 define('PASS', '12345');
 define('DB', 'gb1');
 
+//библиотеки
+include "../engine/lib/classSimpleImage.php";// библиотека ресайза
+
 //
-include $DOCUMENT_ROOT . "/engine/functions.php";
-include $DOCUMENT_ROOT . "/engine/catalog.php";
-include $DOCUMENT_ROOT . "/engine/menu.php";
-include $DOCUMENT_ROOT . "/engine/log.php";
-include $DOCUMENT_ROOT . "/engine/files.php";
-include $DOCUMENT_ROOT . "/engine/gallery.php"; // модуль галереи
-include $DOCUMENT_ROOT . "/engine/db.php";
-include $DOCUMENT_ROOT . "/engine/news.php";
+include DOCUMENT_ROOT . "/engine/functions.php";
+include DOCUMENT_ROOT . "/engine/catalog.php";
+include DOCUMENT_ROOT . "/engine/menu.php";
+include DOCUMENT_ROOT . "/engine/log.php";
+include DOCUMENT_ROOT . "/engine/files.php";
+include DOCUMENT_ROOT . "/engine/gallery.php"; // модуль галереи
+include DOCUMENT_ROOT . "/engine/db.php";
+include DOCUMENT_ROOT . "/engine/news.php";
+include DOCUMENT_ROOT . "/engine/setup.php";
 
 
 //menu
@@ -63,6 +67,9 @@ $menuItems = [
     [
         'url' => '/news',
         'name' => 'Новости'
+    ],
+    [
+        'url' => '/setup',
+        'name' => 'Загрузка'
     ]
-
 ];

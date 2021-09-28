@@ -1,8 +1,9 @@
 <?php
 function getGallery(){
     //return array_splice(scandir('gallery_img/small'),2);
+    dumpBase();
     // получение имен файлов из базы
-    return getAssocResult("SELECT id, name FROM images");
+    return getAssocResult("SELECT id, name FROM images ORDER BY views DESC");
 }
 
 function getOneImage($id) {
@@ -11,32 +12,39 @@ function getOneImage($id) {
 
 //добавить файл в БД
 function addImageToDB($arr){
-    return executeSql("INSERT INTO images SET name = " . $arr['name'] . ", size = " . $arr['size']);
+    return executeSql("INSERT INTO images (name, size) VALUES ('{$arr['name']}',{$arr['size']})");
 }
 
 //увеличить просмотры
-function pageviews($id){
+function addViews($id){
     executeSql("UPDATE images SET views = views + 1 WHERE id = ". $id);
+
+}
+function getViews($id){
     return getOneResult("SELECT views FROM images WHERE id = ". $id);
 }
 
+
 function uploadGallery(){
-    include "../engine/lib/classSimpleImage.php";// библиотека ресайза
+
     $path = "gallery_img/big/" . $_FILES['myimage']['name']; // TODO привести имена файлов в порядок
 
     // проверка файла
     $blacklist = array(".php", ".phtml", ".php3", ".php4");
     foreach ($blacklist as $item) {
         if (preg_match("/$item\$/i", $_FILES['myimage']['name'])) {
-            echo "Загрузка php-файлов запрещена!";
+            $message = "error_php";
+            header("Location: gallery/?status=" . $message);
             exit;
         }
     }
 
     //Проверка на тип файла
     $imageinfo = getimagesize($_FILES['myimage']['tmp_name']);
+
     if ($imageinfo['mime'] != 'image/gif' && $imageinfo['mime'] != 'image/jpeg') {
-        echo "Можно загружать только jpg-файлы, неверное содержание файла, не изображение.";
+        $message = "error_not_jpg";
+        header("Location: gallery/?status=" . $message);
         exit;
     }
 
@@ -52,9 +60,10 @@ function uploadGallery(){
     } else {
         $message = "error";
     }
+
+    //Загрузка в БД
+    addImageToDB(['name' => $_FILES['myimage']['name'], 'size' => $_FILES['myimage']['size']]);
+
     header("Location: gallery/?status=" . $message);
     die();
 }
-
-
-

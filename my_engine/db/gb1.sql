@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Сен 27 2021 г., 23:52
+-- Время создания: Сен 28 2021 г., 11:57
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -39,9 +39,9 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
-(1, '01.jpg', 111456, 26),
-(2, '02.jpg', 70076, 9),
-(3, '03.jpg', 70215, 0),
+(1, '01.jpg', 111456, 27),
+(2, '02.jpg', 70076, 10),
+(3, '03.jpg', 70215, 7),
 (4, '04.jpg', 61733, 0),
 (5, '05.jpg', 160617, 2),
 (6, '06.jpg', 89871, 2),
@@ -102,7 +102,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
