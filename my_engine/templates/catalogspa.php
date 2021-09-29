@@ -5,7 +5,7 @@
 <script>
 
     (async () => {
-        const response = await fetch('?page=apicatalog');
+        const response = await fetch('apicatalog');
 
         //получаем ответ и парсим его в answer в виде объекта
         const answer = await response.json();
