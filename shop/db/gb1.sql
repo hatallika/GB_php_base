@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 02 2021 г., 02:52
+-- Время создания: Окт 05 2021 г., 01:15
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int UNSIGNED NOT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `quantity` int UNSIGNED NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`) VALUES
+(8, 2, 'ma473v0pciprqqkk22pdp510v3655n79', 1),
+(13, 2, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(15, 1, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(16, 3, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `feedback`
 --
 
@@ -40,10 +63,10 @@ CREATE TABLE `feedback` (
 
 INSERT INTO `feedback` (`id`, `name`, `feedback`, `product_id`) VALUES
 (333, 'Сергей', 'Отличный магазин!', 1),
-(334, 'Наталья', 'Привет!', 2),
 (335, 'Марта Бэкк', 'Привет', 1),
-(340, 'Админ1', 'Проверка связи', 1),
-(343, 'Светлана', 'Очень вкусный кофе', 3);
+(343, 'Светлана', 'Очень вкусный кофе', 3),
+(366, 'Наталья', 'Вкусная Пицца', 1),
+(367, 'Светлана', 'Проверка связи', 1);
 
 -- --------------------------------------------------------
 
@@ -64,23 +87,21 @@ CREATE TABLE `images` (
 
 INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
 (22, '01.jpg', 111456, 3),
-(23, '02.jpg', 70076, 0),
+(23, '02.jpg', 70076, 9),
 (24, '03.jpg', 70215, 0),
 (25, '04.jpg', 61733, 0),
 (26, '05.jpg', 160617, 0),
 (27, '06.jpg', 89871, 0),
 (28, '07.jpg', 99418, 0),
 (30, '08.jpg', 103775, 0),
-(31, '09.jpg', 81022, 0),
+(31, '09.jpg', 81022, 6),
 (32, '10.jpg', 97127, 0),
 (33, '11.jpg', 98579, 0),
 (35, '12.jpg', 139286, 0),
-(36, '13.jpg', 113016, 5),
+(36, '13.jpg', 113016, 18),
 (37, '14.jpg', 151814, 0),
-(38, '15.jpg', 112488, 0),
-(44, '01f3394d-b45a-40a4-911e-9af521add4cf.jpg', 90762, 0),
-(45, '01f3394d-b45a-40a4-911e-9af521add4cf.jpg', 90762, 0),
-(46, '_1458-589 (1).jpg', 194378, 0);
+(38, '15.jpg', 112488, 1),
+(48, '37ab2e826a9cda48b13ec2daa6852a10.jpg', 43825, 1);
 
 -- --------------------------------------------------------
 
@@ -116,21 +137,50 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `image` varchar(255) NOT NULL
+  `image` varchar(255) NOT NULL,
+  `likes` int UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Товары';
 
 --
 -- Дамп данных таблицы `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`) VALUES
-(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg'),
-(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png'),
-(3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png');
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`, `likes`) VALUES
+(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 0),
+(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png', 0),
+(3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int UNSIGNED NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
+(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '310423468615b76fc0a9f42.92129101'),
+(2, 'user', '$2y$10$uVZXli9r1hxsmxv5qGdcNuPcKNmF3tFNVxzHFyJFgkdpcozuFTXf.', '89412248615a1d955e2887.37449076');
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Индексы таблицы `feedback`
@@ -157,20 +207,32 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=345;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=368;
 
 --
 -- AUTO_INCREMENT для таблицы `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
@@ -183,6 +245,22 @@ ALTER TABLE `news`
 --
 ALTER TABLE `products`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

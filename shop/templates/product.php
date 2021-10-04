@@ -5,10 +5,13 @@
 
 
 <div>
-    <img src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="150"><br>
-    Цена: <?= $product['price'] ?> <br>
-    Описание: <?= $product['description'] ?><br>
-    <button>Купить</button>
+    <form action="/catalog/add/" method="post">
+        <input type="text" name="id" value="<?= $product['id'] ?>" hidden>
+        <img src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="150"><br>
+        Цена: <?= $product['price'] ?> <br>
+        Описание: <?= $product['description'] ?><br>
+        <input type="submit" value="Купить">
+    </form>
     <hr>
     <h3>Отзывы о товаре:</h3>
 

@@ -80,8 +80,35 @@ function prepareVariables($page, $action=""){
             break;
 
         case 'catalog':
+            $session_id = session_id();
+
             $params['title'] = "Каталог";
             $params['catalog'] = getCatalog();
+            $params['countCartItems'] = countCartProducts($session_id);
+
+            if ($action == "add") {
+                $id = (int)$_POST['id'];
+                addToCart($id, $session_id); // добавляем с учетом количества товара
+                header("Location: /catalog/");
+                die();
+            }
+
+            break;
+
+        case 'cart': //Корзина
+            $session_id = session_id();
+            $params['title'] = "Корзина";
+            $params['cart'] = getCart($session_id);
+            $params['total'] = totalPrice($session_id);
+            $params['countCartItems'] = countCartProducts($session_id);
+
+            if ($action == "del"){
+                $cart_id = (int)$_POST['id']; //id уникальной записи в корзине
+                deleteFromCart($cart_id);
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                die();
+            }
+
             break;
 
         case 'product':

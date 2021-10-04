@@ -18,7 +18,7 @@ function getAssocResult($sql) {
 }
 
 //WHERE id = 1 // для запроса одной строки
-function getOneResult($sql) {
+    function getOneResult($sql) {
     $result = @mysqli_query(getDb(), $sql) or die(mysqli_error(getDb()));
     return mysqli_fetch_assoc($result);
 }
