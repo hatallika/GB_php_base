@@ -13,14 +13,13 @@
 */
 
 // ядро
-
-
-
 function render($page, $params = []){
     return renderTemplate(LAYOUTS_DIR . $params['layout'], [
             'menu' => '<div class="menu">'. renderMenu($params['menu']) . '</div>',
             'content' => renderTemplate($page, $params),
-            'title' => $params['title']
+            'title' => $params['title'],
+            'auth_in_template' => renderTemplate("auth_in_template", $params),
+
             //'title' => getTitle($page)// 2 способ пробросить tittle
         ]
     );

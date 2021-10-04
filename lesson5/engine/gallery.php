@@ -3,11 +3,11 @@ function getGallery(){
     //return array_splice(scandir('gallery_img/small'),2);
     dumpBase();
     // получение имен файлов из базы
-    return getAssocResult("SELECT id, name FROM images ORDER BY views DESC");
+    return getAssocResult("SELECT id, name, views FROM images ORDER BY views DESC");
 }
 
 function getOneImage($id) {
-    return getOneResult("SELECT name FROM images WHERE id =" . $id);
+    return getOneResult("SELECT name, views FROM images WHERE id =" . $id);
 }
 
 //добавить файл в БД
@@ -62,7 +62,9 @@ function uploadGallery(){
     }
 
     //Загрузка в БД
-    addImageToDB(['name' => $_FILES['myimage']['name'], 'size' => $_FILES['myimage']['size']]);
+    $filename = mysqli_real_escape_string(getDb(), $_FILES['myimage']['name']);
+    $filesize = mysqli_real_escape_string(getDb(), $_FILES['myimage']['size']);
+    addImageToDB(['name' => $filename, 'size' => $filesize]);
 
     header("Location: gallery/?status=" . $message);
     die();

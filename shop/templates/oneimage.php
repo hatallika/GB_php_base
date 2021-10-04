@@ -6,6 +6,6 @@
     <div class="oneimages">
         <img class="oneimages_img" src="/gallery_img/big/<?=$files['name']?>" width="500" />
     </div>
-    <div>Количество просмотров: <?=$views['views']?></div>
+    <div>Количество просмотров: <?=$files['views']?></div>
     <div class="back"><a href="/gallery">Назад</a></div>
 </div>

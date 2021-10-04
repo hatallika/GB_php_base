@@ -7,6 +7,8 @@
 </head>
 <body>
 <?=$menu?>
+<?=$auth_in_template?>
+
 <?=$content?>
 </body>
 </html>

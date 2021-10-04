@@ -57,8 +57,7 @@ switch ($page) {
     case 'oneimage':
         $id = (int)$_GET['id'];
         addViews($id); // счетчик просмотров
-        $params['views'] = getViews($id);
-        $params['files'] = getOneImage($id);
+        $params['filename'] = getOneImage($id);
         $params['layout'] = 'gallery_layout';
         break;
 

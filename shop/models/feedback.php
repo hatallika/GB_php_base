@@ -48,6 +48,7 @@ function doFeedBackAction($action, $id) {
 
     if ($action == 'add') {
         addFeedBack($id);
+        $_SESSION['message'] = 'Сообщение добавлено!';
         return 'ok';
     }
 
@@ -57,10 +58,12 @@ function doFeedBackAction($action, $id) {
 
     if ($action == 'save') {
         saveFeedback($id);
-        return 'edit';
+        $_SESSION['message'] = 'Сообщение изменено';
+        return 'save';
     }
     if ($action == 'delete') {
         deleteFeedback($id);
+        $_SESSION['message'] = 'Сообщение удалено';
         return 'delete';
     }
 }

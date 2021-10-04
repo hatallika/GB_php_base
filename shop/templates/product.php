@@ -5,7 +5,7 @@
 
 
 <div>
-    <img src="../img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="150"><br>
+    <img src="/img/<?= $product['image'] ?>" alt="<?= $product['name'] ?>" width="150"><br>
     Цена: <?= $product['price'] ?> <br>
     Описание: <?= $product['description'] ?><br>
     <button>Купить</button>
@@ -23,8 +23,8 @@
     <?php foreach ($feedback as $value):?>
         <div>
             <strong><?=$value['name']?></strong>: <?=$value['feedback']?>
-            <a href="../product/edit/?id=<?= (int)$_GET['id'] ?>&feedback_id=<?=$value['id']?>">[edit]</a>
-            <a href="../product/delete/?id=<?= (int)$_GET['id'] ?>&feedback_id=<?=$value['id']?>">[x]</a><br>
+            <a href="/product/edit/?id=<?= (int)$_GET['id'] ?>&feedback_id=<?=$value['id']?>">[edit]</a>
+            <a href="/product/delete/?id=<?= (int)$_GET['id'] ?>&feedback_id=<?=$value['id']?>">[x]</a><br>
         </div>
     <?php endforeach; ?>
 

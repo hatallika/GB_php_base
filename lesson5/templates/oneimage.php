@@ -1,11 +1,11 @@
 <div class="post_title">
-    <h2>Фото: <?=$files['name']?></h2>
+    <h2>Фото: <?=$filename['name']?></h2>
 </div>
 
 <div class="gallery">
     <div class="oneimages">
-        <img class="oneimages_img" src="/gallery_img/big/<?=$files['name']?>" width="500" />
+        <img class="oneimages_img" src="/gallery_img/big/<?=$filename['name']?>" width="500" />
     </div>
-    <div>Количество просмотров: <?=$views['views']?></div>
+    <div>Количество просмотров: <?=$filename['views']?></div>
     <div class="back"><a href="/gallery">Назад</a></div>
 </div>

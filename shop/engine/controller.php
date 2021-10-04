@@ -5,7 +5,9 @@ function prepareVariables($page, $action=""){
     global $menuItems;
     $params = [
         'menu' => $menuItems,
-        'layout' => 'main'
+        'layout' => 'main',
+        'auth' => isAuth(),
+        'name' => get_user()
     ];
 
     switch ($page) {
@@ -13,6 +15,31 @@ function prepareVariables($page, $action=""){
         case 'index':
             $params['title'] = "Главная";
             break;
+
+        case 'login':
+
+            $login = $_POST['login'];
+            $pass = $_POST['pass'];
+            if (auth($login,$pass)) {
+                if (isset($_POST['save'])) {
+                    updateHash();
+                }
+                header("Location: " . $_SERVER['HTTP_REFERER']);
+                die();
+            } else {
+                $_SESSION['message']['login'] = 'Не верный логин и пароль';
+                header("Location: " . $_SERVER['HTTP_REFERER']);
+                die();
+            }
+            break;
+        case 'logout':
+            setcookie("hash", '', time() - 3600, '/');
+            session_regenerate_id();
+            session_destroy();
+            header("Location: /");
+            die();
+            break;
+
 
         case 'buh':
             $params['title'] = "Бухгалтерия";
@@ -48,7 +75,6 @@ function prepareVariables($page, $action=""){
         case 'oneimage':
             $id = (int)$_GET['id'];
             addViews($id); // счетчик просмотров
-            $params['views'] = getViews($id);
             $params['files'] = getOneImage($id);
             $params['layout'] = 'gallery_layout';
             break;
@@ -59,18 +85,15 @@ function prepareVariables($page, $action=""){
             break;
 
         case 'product':
-            var_dump($_SERVER);
             $product_id = (int)$_GET['id'];
             $params['product'] = getProduct($product_id);
-            //Отзывы
-            $messages = [
-                'ok' => 'Сообщение добавлено',
-                'delete' => 'Сообщение удалено',
-                'edit' => 'Сообщение изменено',
-                'error' => 'Ошибка'
-            ];
+            if(isset($_SESSION['message'])){
+                $params['message'] = $_SESSION['message'];
+                unset($_SESSION['message']);
+            }
+
             $params['feedback'] = getALLFeedback($product_id);
-            $params['message'] = $messages[$_GET['message']];
+            //$params['message'] = $messages[$_GET['message']];
 
             if ($_POST["id"]){
                 $id = (int)$_POST['id'];
@@ -86,7 +109,11 @@ function prepareVariables($page, $action=""){
             }
 
             if (in_array($action,["add", "save", "delete"])) {
-                header("Location: /product/?id={$product_id}&message=" . doFeedBackAction($action, $id));
+                doFeedBackAction($action, $id);
+
+                //header("Location: /product/?id={$product_id}&message=" . doFeedBackAction($action, $id));
+                header("Location: /product/?id=" . $product_id);
+
             }
             break;
 

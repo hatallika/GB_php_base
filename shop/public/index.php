@@ -1,4 +1,5 @@
 <?php
+session_start();
 //__DIR__ //dirname(__DIR__)
 define("DOCUMENT_ROOT", dirname(__DIR__)); //получили путь выше public
 include DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации

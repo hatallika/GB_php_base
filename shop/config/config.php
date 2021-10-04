@@ -14,6 +14,7 @@ include "../engine/lib/classSimpleImage.php";// библиотека ресай�
 //
 include DOCUMENT_ROOT . "/engine/controller.php";
 include DOCUMENT_ROOT . "/engine/render.php";
+include DOCUMENT_ROOT . "/engine/auth.php";
 include DOCUMENT_ROOT . "/models/catalog.php";
 include DOCUMENT_ROOT . "/models/menu.php";
 include DOCUMENT_ROOT . "/models/log.php";
@@ -37,24 +38,6 @@ $menuItems = [
     [
         'url' => '/about',
         'name' => 'О нас'
-    ],
-    [
-        'url' => '/ex',
-        'name' => 'Упражнения',
-        'submenu' => [
-            [
-                'url' => '/ex#1',
-                'name' => 'Упражнение1'
-            ],
-            [
-                'url' => '/ex#2',
-                'name' => 'Упражнение2'
-            ],
-            [
-                'url' => '/ex#3',
-                'name' => 'Упражнение3'
-            ],
-        ]
     ],
     [
         'url' => '/gallery',

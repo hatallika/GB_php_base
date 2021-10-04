@@ -27,6 +27,7 @@
 <body>
 <div id="main">
     <?=$menu?>
+    <?=$auth_in_template?>
     <?=$content?>
 </div>
 </body>

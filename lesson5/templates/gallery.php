@@ -3,7 +3,8 @@
 </div>
     <div class="gallery">
         <?php foreach($files as $img):?>
-            <a rel="gallery" class="photo" href="/oneimage/?id=<?=$img['id']?>"><img src="/gallery_img/small/<?=$img['name']?>" width="150" /></a>
+            <a rel="gallery" class="photo" href="/oneimage/?id=<?=$img['id']?>">
+                <img src="/gallery_img/small/<?=$img['name']?>" width="150" /></a><?=$img['views']?>
         <?php endforeach;?>
 
         <p class="status">

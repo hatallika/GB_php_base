@@ -3,11 +3,11 @@ function getGallery(){
     //return array_splice(scandir('gallery_img/small'),2);
     dumpBase();
     // получение имен файлов из базы
-    return getAssocResult("SELECT id, name FROM images ORDER BY views DESC");
+    return getAssocResult("SELECT id, name, views FROM images ORDER BY views DESC");
 }
 
 function getOneImage($id) {
-    return getOneResult("SELECT name FROM images WHERE id =" . $id);
+    return getOneResult("SELECT name, views FROM images WHERE id =" . $id);
 }
 
 //добавить файл в БД
@@ -33,10 +33,9 @@ function uploadGallery(){
     $blacklist = array(".php", ".phtml", ".php3", ".php4");
     foreach ($blacklist as $item) {
         if (preg_match("/$item\$/i", $_FILES['myimage']['name'])) {
-            $message = "error_php";
             //header("Location: gallery/?status=" . $message);
             //exit;
-            return $message;
+            return "error_php";
         }
     }
 
@@ -44,27 +43,27 @@ function uploadGallery(){
     $imageinfo = getimagesize($_FILES['myimage']['tmp_name']);
 
     if ($imageinfo['mime'] != 'image/gif' && $imageinfo['mime'] != 'image/jpeg') {
-        $message = "error_not_jpg";
         //header("Location: gallery/?status=" . $message);
-        return $message;
+        return "error_not_jpg";
     }
 
     //загрузка в нужную директорию
     if (move_uploaded_file($_FILES['myimage']['tmp_name'], $path)) { // данная функция вернет true || false
-        $message = "ok";
 
         //ресайз изображения через библиотеку
         $image = new SimpleImage();
         $image->load($path);
         $image->resizeToWidth(150);
         $image->save('gallery_img/small/' . $_FILES['myimage']['name']);
+        $message = "ok";
     } else {
-        $message = "error";
+        return "error";
     }
 
     //Загрузка в БД
-    addImageToDB(['name' => $_FILES['myimage']['name'], 'size' => $_FILES['myimage']['size']]);
-
+    $filename = mysqli_real_escape_string(getDb(), $_FILES['myimage']['name']);
+    $filesize = mysqli_real_escape_string(getDb(), $_FILES['myimage']['size']);
+    addImageToDB(['name' => $filename, 'size' => $filesize]);
     //header("Location: gallery/?status=" . $message);
     return $message;
 }
