@@ -57,6 +57,10 @@ function prepareVariables($page, $action=""){
 
         case 'gallery':
             $params['title'] = "Галлерея";
+            if (!empty($_FILES)) {
+                $message = uploadGallery();
+                header("Location: gallery/?status=" . $message);
+            }
             $params['files'] = getGallery();
             $params['layout'] = 'gallery_layout'; // другой главный шаблон галереи
             $messages = [
@@ -65,10 +69,7 @@ function prepareVariables($page, $action=""){
                 'error_php' => 'Загрузка php-файлов запрещена!',
                 'error_not_jpg' => 'Можно загружать только jpg-файлы, неверное содержание файла, не изображение.'
             ];
-            if (!empty($_FILES)) {
-                $message = uploadGallery();
-                header("Location: gallery/?status=" . $message);
-            }
+
             $params['message'] = $messages[$_GET['status']];
             break;
 
@@ -101,6 +102,12 @@ function prepareVariables($page, $action=""){
             $params['cart'] = getCart($session_id);
             $params['total'] = totalPrice($session_id);
             $params['countCartItems'] = countCartProducts($session_id);
+            // если заказ отправлен
+            if(isset($_SESSION['message']['order'])){
+                $params['message_order'] = $_SESSION['message']['order'];
+                unset($_SESSION['message']['order']);
+            }
+
 
             if ($action == "del"){
                 $cart_id = (int)$_POST['id']; //id уникальной записи в корзине
@@ -109,6 +116,18 @@ function prepareVariables($page, $action=""){
                 die();
             }
 
+            break;
+
+        case 'order':
+            $session_id = session_id();
+
+            if (isset($_POST['order_ok'])){
+                $order_params = ['name' => $_POST['order_name'], 'phone' =>$_POST['phone']];
+                addOrder($session_id, $order_params);
+                session_regenerate_id(); // пользователя ждет новая корзина
+                $_SESSION['message']['order'] = "Заказ отправлен. Ожидайте звонка";
+                header("Location: /cart/");
+            }
             break;
 
         case 'product':
@@ -131,12 +150,9 @@ function prepareVariables($page, $action=""){
                 }
             }
 
-            if ($action == "edit") {
-                $params['fields'] = doFeedBackAction($action, $id);
-            }
+            $params['fields'] = doFeedBackAction($action, $id);
 
             if (in_array($action,["add", "save", "delete"])) {
-                doFeedBackAction($action, $id);
 
                 //header("Location: /product/?id={$product_id}&message=" . doFeedBackAction($action, $id));
                 header("Location: /product/?id=" . $product_id);
@@ -163,14 +179,13 @@ function prepareVariables($page, $action=""){
             }
             break;
         case 'feedback':
-            $messages = [
-                'ok' => 'Сообщение добавлено',
-                'delete' => 'Сообщение удалено',
-                'edit' => 'Сообщение изменено',
-                'error' => 'Ошибка'
-            ];
+            if(isset($_SESSION['message'])){
+                $params['message'] = $_SESSION['message'];
+                unset($_SESSION['message']);
+            }
+
             $params['feedback'] = getALLFeedback();
-            $params['message'] = $messages[$_GET['message']];
+
 
             if ($_POST["id"]){
                 $id = (int)$_POST['id'];
@@ -178,12 +193,17 @@ function prepareVariables($page, $action=""){
                 $id = (int)$_GET['id'];
             }
 
+            if($_POST["feedback_id"]){
+                $id = (int)$_POST['feedback_id'];
+            }
+
             if ($action == "edit") {
                 $params['fields'] = doFeedBackAction($action, $id);
             }
 
             if (in_array($action,["add", "save", "delete"])) {
-                header("Location: /feedback/?message=" . doFeedBackAction($action, $id));
+                doFeedBackAction($action, $id);
+                header("Location: /feedback/");
             }
             break;
     }

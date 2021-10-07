@@ -12,5 +12,22 @@
     </div>
     <hr>
 <?php endforeach; ?>
-Количество товаров: <?=$countCartItems['count']?><br>
-Сумма товаров <?=$total['summ']?>
+<?php if(isset ($countCartItems['count'])): ?>
+Количество товаров: <?=$countCartItems?><br>
+Сумма товаров <?=$total['summ']?><br>
+<?php else:?>
+Корзина пустая <br>
+ <a href="/catalog">Перейти в каталог</a> <br>
+<?php endif;?>
+
+
+<?php if(!isset($message_order) && isset($countCartItems['count'])):?>
+<form action="/order/" method="post">
+    <h3>Оформить заказ</h3>
+    <input type="text" name="order_name" placeholder="Ваше имя">
+    <input type="text" name="phone" placeholder="Ваш номер телефона">
+    <input type="submit" name="order_ok" value="Заказать">
+</form>
+<?php else:?>
+<b><?=$message_order?></b>
+    <?php endif;?>

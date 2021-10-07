@@ -2,7 +2,7 @@
 
 ?>
 <h2>Каталог</h2>
-<div><a href="/cart/">Корзина (<?=$countCartItems['count']?>)</a></div>
+<div><a href="/cart/">Корзина (<?=$countCartItems['count']?: "Корзина пуста"?>)</a></div>
 <div>
     <?php foreach ($catalog as $product): ?>
         <form action="/catalog/add/" method="post">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 05 2021 г., 01:15
+-- Время создания: Окт 05 2021 г., 11:54
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -42,7 +42,18 @@ INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`) VALUES
 (8, 2, 'ma473v0pciprqqkk22pdp510v3655n79', 1),
 (13, 2, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
 (15, 1, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
-(16, 3, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2);
+(16, 3, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(18, 2, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(19, 3, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(20, 1, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(21, 1, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
+(22, 2, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
+(23, 1, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
+(24, 2, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
+(27, 1, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
+(28, 2, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
+(29, 1, 'al026c0nbs2dtag9uju093etnc0hhor7', 2),
+(30, 1, '82er91s1fp71kki45u8h1513ghugrq4u', 2);
 
 -- --------------------------------------------------------
 
@@ -129,6 +140,28 @@ INSERT INTO `news` (`id`, `title`, `text`, `likes`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int UNSIGNED NOT NULL,
+  `cart_session_id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`) VALUES
+(14, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 'Наталья', '56565968989'),
+(15, 'al026c0nbs2dtag9uju093etnc0hhor7', 'Наталья', '123'),
+(16, '82er91s1fp71kki45u8h1513ghugrq4u', 'Наталья', '43243424');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `products`
 --
 
@@ -168,7 +201,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
-(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '310423468615b76fc0a9f42.92129101'),
+(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '1469420230615b7dc95619f9.29977962'),
 (2, 'user', '$2y$10$uVZXli9r1hxsmxv5qGdcNuPcKNmF3tFNVxzHFyJFgkdpcozuFTXf.', '89412248615a1d955e2887.37449076');
 
 --
@@ -201,6 +234,12 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `products`
 --
 ALTER TABLE `products`
@@ -220,7 +259,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `feedback`
@@ -239,6 +278,12 @@ ALTER TABLE `images`
 --
 ALTER TABLE `news`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `products`

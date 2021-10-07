@@ -37,3 +37,7 @@ function totalPrice($session_id){
     return getOneResult("SELECT SUM(p.price * c.quantity) as summ FROM products p 
                             JOIN cart c WHERE c.product_id = p.id AND session_id = '{$session_id}'");
 }
+
+function addOrder($session_id, $params){
+    executeSql("INSERT INTO orders (name, phone, cart_session_id) VALUES ('{$params['name']}','{$params['phone']}', '{$session_id}')");
+}
