@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Сен 28 2021 г., 11:57
+-- Время создания: Окт 05 2021 г., 11:54
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -24,6 +24,64 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int UNSIGNED NOT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `quantity` int UNSIGNED NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `cart`
+--
+
+INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`) VALUES
+(8, 2, 'ma473v0pciprqqkk22pdp510v3655n79', 1),
+(13, 2, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(15, 1, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(16, 3, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
+(18, 2, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(19, 3, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(20, 1, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
+(21, 1, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
+(22, 2, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
+(23, 1, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
+(24, 2, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
+(27, 1, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
+(28, 2, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
+(29, 1, 'al026c0nbs2dtag9uju093etnc0hhor7', 2),
+(30, 1, '82er91s1fp71kki45u8h1513ghugrq4u', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `feedback` text NOT NULL,
+  `product_id` int UNSIGNED NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `name`, `feedback`, `product_id`) VALUES
+(333, 'Сергей', 'Отличный магазин!', 1),
+(335, 'Марта Бэкк', 'Привет', 1),
+(343, 'Светлана', 'Очень вкусный кофе', 3),
+(366, 'Наталья', 'Вкусная Пицца', 1),
+(367, 'Светлана', 'Проверка связи', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `images`
 --
 
@@ -39,21 +97,22 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
-(1, '01.jpg', 111456, 27),
-(2, '02.jpg', 70076, 10),
-(3, '03.jpg', 70215, 7),
-(4, '04.jpg', 61733, 0),
-(5, '05.jpg', 160617, 2),
-(6, '06.jpg', 89871, 2),
-(7, '07.jpg', 99418, 0),
-(8, '08.jpg', 103775, 0),
-(9, '09.jpg', 81022, 0),
-(10, '10.jpg', 97127, 1),
-(11, '11.jpg', 98579, 1),
-(12, '12.jpg', 139286, 0),
-(13, '13.jpg', 113016, 0),
-(14, '14.jpg', 151814, 0),
-(15, '15.jpg', 112488, 1);
+(22, '01.jpg', 111456, 3),
+(23, '02.jpg', 70076, 9),
+(24, '03.jpg', 70215, 0),
+(25, '04.jpg', 61733, 0),
+(26, '05.jpg', 160617, 0),
+(27, '06.jpg', 89871, 0),
+(28, '07.jpg', 99418, 0),
+(30, '08.jpg', 103775, 0),
+(31, '09.jpg', 81022, 6),
+(32, '10.jpg', 97127, 0),
+(33, '11.jpg', 98579, 0),
+(35, '12.jpg', 139286, 0),
+(36, '13.jpg', 113016, 18),
+(37, '14.jpg', 151814, 0),
+(38, '15.jpg', 112488, 1),
+(48, '37ab2e826a9cda48b13ec2daa6852a10.jpg', 43825, 1);
 
 -- --------------------------------------------------------
 
@@ -78,9 +137,89 @@ INSERT INTO `news` (`id`, `title`, `text`, `likes`) VALUES
 (5, 'Путин определил глав профильных комиссий \"Единой России\"', 'МОСКВА, 27 сен — РИА Новости. Президент Владимир Путин поздравил \"пятерку\" списка \"Единой России\" с убедительной победой на выборах в Госдуму и распределил между ними внутрипартийные должности.\r\n\"Хочу <...> поблагодарить именно как лидеров предвыборного списка партии за достойный результат избирательной кампании\", — сказал глава государства на встрече, добавив, что это отражает высокий уровень доверия и к самой партии, и к ее конкретным делам.', 0),
 (6, 'Организатор восхождения на Эльбрус написал явку с повинной', 'МОСКВА, 27 сен — РИА Новости. Организатор восхождения на Эльбрус, во время которого погибли альпинисты, написал явку с повинной и дал признательные показания, сообщил СК.\r\nСледствие будет ходатайствовать о его аресте.\r\nУчения МЧС в Приэльбрусье - РИА Новости, 1920, 26.09.2021\r\nВчера, 17:31\r\nТела трех альпинистов спустили с Эльбруса на высоту 5100 метров\r\nНа прошлой неделе на Эльбрусе на высоте 5,4 тысячи метров группа из 19 альпинистов из-за ухудшения погодных условий попросила о помощи. Спасти удалось только 14 из них, 11 пострадавших доставили в республиканскую клиническую больницу в Нальчике, семерых позже выписали.', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int UNSIGNED NOT NULL,
+  `cart_session_id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`) VALUES
+(14, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 'Наталья', '56565968989'),
+(15, 'al026c0nbs2dtag9uju093etnc0hhor7', 'Наталья', '123'),
+(16, '82er91s1fp71kki45u8h1513ghugrq4u', 'Наталья', '43243424');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `products`
+--
+
+CREATE TABLE `products` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `likes` int UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Товары';
+
+--
+-- Дамп данных таблицы `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`, `likes`) VALUES
+(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 0),
+(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png', 0),
+(3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int UNSIGNED NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
+(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '1469420230615b7dc95619f9.29977962'),
+(2, 'user', '$2y$10$uVZXli9r1hxsmxv5qGdcNuPcKNmF3tFNVxzHFyJFgkdpcozuFTXf.', '89412248615a1d955e2887.37449076');
+
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Индексы таблицы `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `images`
@@ -95,20 +234,78 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT для таблицы `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=368;
 
 --
 -- AUTO_INCREMENT для таблицы `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
 --
 ALTER TABLE `news`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT для таблицы `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

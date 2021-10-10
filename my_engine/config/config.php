@@ -12,16 +12,20 @@ define('DB', 'gb1');
 include "../engine/lib/classSimpleImage.php";// библиотека ресайза
 
 //
-include DOCUMENT_ROOT . "/engine/functions.php";
-include DOCUMENT_ROOT . "/engine/catalog.php";
-include DOCUMENT_ROOT . "/engine/menu.php";
-include DOCUMENT_ROOT . "/engine/log.php";
-include DOCUMENT_ROOT . "/engine/files.php";
-include DOCUMENT_ROOT . "/engine/gallery.php"; // модуль галереи
+include DOCUMENT_ROOT . "/engine/controller.php";
+include DOCUMENT_ROOT . "/engine/render.php";
+include DOCUMENT_ROOT . "/engine/auth.php";
+include DOCUMENT_ROOT . "/models/catalog.php";
+include DOCUMENT_ROOT . "/models/menu.php";
+include DOCUMENT_ROOT . "/models/log.php";
+include DOCUMENT_ROOT . "/models/files.php";
+include DOCUMENT_ROOT . "/models/gallery.php"; // модуль галереи
 include DOCUMENT_ROOT . "/engine/db.php";
-include DOCUMENT_ROOT . "/engine/news.php";
-include DOCUMENT_ROOT . "/engine/setup.php";
-
+include DOCUMENT_ROOT . "/models/news.php";
+include DOCUMENT_ROOT . "/models/setup.php";
+include DOCUMENT_ROOT . "/models/feedback.php";
+include DOCUMENT_ROOT . "/models/cart.php";
+include DOCUMENT_ROOT . "/models/orders.php";
 
 //menu
 $menuItems = [
@@ -31,45 +35,30 @@ $menuItems = [
     ],
     [
         'url' => '/catalog',
-        'name' => 'Каталог'
+        'name' => 'Каталог',
+        'submenu' => [
+            [
+                'url' => '/cart',
+                'name' => 'Корзина<span class="counter"> ('.(getBasketCount()?:'нет товаров').')</span>'
+            ],
+            [
+                'url' => '/orders',
+                'name' => 'Мои заказы'
+            ],
+        ]
     ],
-    [
-        'url' => '/catalogspa',
-        'name' => 'Каталог SPA'
-    ],
-
     [
         'url' => '/about',
         'name' => 'О нас'
-    ],
-    [
-        'url' => '/ex',
-        'name' => 'Упражнения',
-        'submenu' => [
-            [
-                'url' => '/ex#1',
-                'name' => 'Упражнение1'
-            ],
-            [
-                'url' => '/ex#2',
-                'name' => 'Упражнение2'
-            ],
-            [
-                'url' => '/ex#3',
-                'name' => 'Упражнение3'
-            ],
-        ]
     ],
     [
         'url' => '/gallery',
         'name' => 'Галлерея'
     ],
     [
-        'url' => '/news',
-        'name' => 'Новости'
-    ],
-    [
-        'url' => '/setup',
-        'name' => 'Загрузка'
+        'url' => '/feedback',
+        'name' => 'Отзывы'
     ]
 ];
+
+

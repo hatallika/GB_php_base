@@ -76,3 +76,6 @@ body {
     -moz-transform:scale(1.05);
     -webkit-transform:scale(1.05);
 }
+.qnt {
+    display: inline-block;
+}
