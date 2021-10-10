@@ -32,6 +32,14 @@ function prepareVariables($page, $action=""){
             }
             break;
 
+        case 'admin':
+            $session = session_id();
+            if(!is_admin()){
+                die("Доступ запрещен");
+            }
+            $params['orders'] = getAllOrdersForAdmin();
+            break;
+
         case 'index':
             $params['title'] = "Главная";
             break;
@@ -58,12 +66,6 @@ function prepareVariables($page, $action=""){
             die();
             break;
 
-
-        case 'buh':
-            $params['title'] = "Бухгалтерия";
-            $params['files'] = getFiles();
-            break;
-
         case 'news':
             $params['news'] = getNews();
             break;
@@ -88,7 +90,7 @@ function prepareVariables($page, $action=""){
                 'error_not_jpg' => 'Можно загружать только jpg-файлы, неверное содержание файла, не изображение.'
             ];
 
-            $params['message'] = $messages[$_GET['status']];
+            $params['message'] = $messages[$_GET['status']]??"";
             break;
 
         case 'oneimage':
@@ -122,10 +124,7 @@ function prepareVariables($page, $action=""){
             $params['total'] = totalPrice($session_id);
             $params['countCartItems'] = countCartProducts($session_id);
             // сообщение если заказ отправлен
-            if(isset($_SESSION['message']['order'])){
-                $params['message_order'] = $_SESSION['message']['order'];
-                unset($_SESSION['message']['order']);
-            }
+            $params['message_order_sent'] = getSessionMessage('message_order_sent');
 
             if ($action == "del"){
                 $cart_id = (int)$_POST['id']; //id уникальной записи в корзине
@@ -151,16 +150,13 @@ function prepareVariables($page, $action=""){
 
         case 'order':
             $session_id = session_id();
-            if(isset($_SESSION['order_message'])){
-                $params['order_message'] = $_SESSION['order_message'];
-                unset($_SESSION['order_message']);
-            }
+            $params['order_message'] = getSessionMessage('order_message');
 
             if (isset($_POST['order_ok'])){
                 $order_params = ['name' => $_POST['order_name'], 'phone' =>$_POST['phone']];
                 addOrder($session_id, $order_params);
                 session_regenerate_id(); // пользователя ждет новая корзина
-                $_SESSION['message']['order'] = "Заказ отправлен. Ожидайте звонка";
+                $_SESSION['message_order_sent'] = "Заказ отправлен. Ожидайте звонка";
                 header("Location: /cart/");
             }
             if ($action == 'editcontacts'){
@@ -171,9 +167,8 @@ function prepareVariables($page, $action=""){
                 $params['order_id'] = (int)$_GET['id'];
                 $params['order'] = getOrderDetails($_GET['id']);
             }
+
             break;
-
-
 
         case 'orders':
             $params['orders'] = getAllorders();
@@ -182,11 +177,8 @@ function prepareVariables($page, $action=""){
         case 'product':
             $product_id = (int)$_GET['id'];
             $params['product'] = getProduct($product_id);
+            $params['message'] = getSessionMessage('message');
 
-            if(isset($_SESSION['message'])){
-                $params['message'] = $_SESSION['message'];
-                unset($_SESSION['message']);
-            }
             $params['product_id'] = $product_id;
             doFeedBackAction($params, $action);
 
@@ -215,15 +207,11 @@ function prepareVariables($page, $action=""){
                 uploadImageToDB();
             }
             break;
-        case 'feedback':
 
+        case 'feedback':
             doFeedBackAction($params, $action);
             $params['feedback'] = getALLFeedback(0);
-
-            if(isset($_SESSION['message'])){
-                $params['message'] = $_SESSION['message'];
-                unset($_SESSION['message']);
-            }
+            $params['message'] = getSessionMessage('message')??"";
             break;
 
         case 'feedback2':
@@ -233,8 +221,6 @@ function prepareVariables($page, $action=""){
         case 'feedbackapi';
         doApiFeedbackAction($action);
         break;
-
-
     }
     return $params;
 

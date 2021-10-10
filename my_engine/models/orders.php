@@ -15,10 +15,23 @@ function getAllOrders(){
                     FROM orders, users WHERE orders.user_id = users.id AND login = '{$login}'");
 }
 
+function getAllOrdersForAdmin(){
+    return getAssocResult("SELECT id, name, phone, cart_session_id FROM orders");
+}
+//получить детали заказ админу доступна детализация при любом id
 function getOrderDetails($id){
+    $user = get_user();
     $id = (int)$id;
-    $session = getOneResult("SELECT cart_session_id as session FROM orders WHERE id={$id}")['session'];
-    return  getCartFromOrder($session);
+    if(is_admin()){
+        $session = getOneResult("SELECT cart_session_id as session FROM orders WHERE id={$id}")['session'];
+    } else {
+        //добавим проверку по логину
+        $session = getOneResult("SELECT o.cart_session_id as session FROM orders o
+                                JOIN users u ON o.user_id = u.id WHERE o.id={$id} AND u.login = '{$user}'")['session'];
+    }
+    if($session){
+        return  getCartFromOrder($session);
+    }
 }
 
 function getCartFromOrder($session){

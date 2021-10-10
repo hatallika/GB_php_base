@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 05 2021 г., 11:54
+-- Время создания: Окт 10 2021 г., 15:57
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -39,21 +39,17 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`) VALUES
-(8, 2, 'ma473v0pciprqqkk22pdp510v3655n79', 1),
-(13, 2, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
-(15, 1, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
-(16, 3, 'd2egavjqj9r724h4kjtqjdofotiv12r6', 2),
-(18, 2, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
-(19, 3, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
-(20, 1, '8vpjbll57b2perl0kt6p5e2ctjprr7l4', 1),
-(21, 1, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
-(22, 2, 'ljbv7tvn1kp94r0j5ie98qt744ge4o9d', 2),
-(23, 1, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
-(24, 2, 'q0ki22ocarv0hmg55ekphgrmo32lgnbv', 1),
-(27, 1, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
-(28, 2, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 1),
-(29, 1, 'al026c0nbs2dtag9uju093etnc0hhor7', 2),
-(30, 1, '82er91s1fp71kki45u8h1513ghugrq4u', 2);
+(37, 1, 'gvvsrub41do2pgd8hbhg4ho9cqtgqted', 3),
+(38, 3, 'gvvsrub41do2pgd8hbhg4ho9cqtgqted', 2),
+(50, 2, 'p5b16tum7t8d54vl79h93ohtoc4958tt', 4),
+(51, 1, 'oofk7klm954s09ocnq9ndehq93h2uhbo', 2),
+(52, 2, 'oofk7klm954s09ocnq9ndehq93h2uhbo', 1),
+(53, 1, '8o6jlreekcob0866bajihrggk7bir19r', 3),
+(55, 1, '0f7crk7pq5n53lbekl00c504leg57p7k', 3),
+(56, 2, '0f7crk7pq5n53lbekl00c504leg57p7k', 2),
+(58, 2, 'semul27vtaregl8un41fen277q81auac', 1),
+(59, 3, 'semul27vtaregl8un41fen277q81auac', 2),
+(60, 1, 'gpqm0h89b7tofjiu5dqch0joh9qu3lt9', 2);
 
 -- --------------------------------------------------------
 
@@ -65,7 +61,7 @@ CREATE TABLE `feedback` (
   `id` int UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `feedback` text NOT NULL,
-  `product_id` int UNSIGNED NOT NULL DEFAULT '1'
+  `product_id` int UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -73,11 +69,16 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `name`, `feedback`, `product_id`) VALUES
-(333, 'Сергей', 'Отличный магазин!', 1),
-(335, 'Марта Бэкк', 'Привет', 1),
+(333, 'Сергей', 'Отличный магазин!', 0),
+(335, 'Марта Бэкк', 'Привет', 0),
 (343, 'Светлана', 'Очень вкусный кофе', 3),
 (366, 'Наталья', 'Вкусная Пицца', 1),
-(367, 'Светлана', 'Проверка связи', 1);
+(369, 'Светлана', 'Рекомендую!', 2),
+(374, 'Светлана', 'Привет', 0),
+(380, 'Наталья', 'Очень вкусная!', 1),
+(404, 'Сергей', 'Еще одну пиццу, пожалуйста!', 1),
+(407, 'Сергей', 'привет', 0),
+(408, 'Сергей', 'А я люблю с грибами!', 1);
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,7 @@ CREATE TABLE `images` (
 
 INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
 (22, '01.jpg', 111456, 3),
-(23, '02.jpg', 70076, 9),
+(23, '02.jpg', 70076, 10),
 (24, '03.jpg', 70215, 0),
 (25, '04.jpg', 61733, 0),
 (26, '05.jpg', 160617, 0),
@@ -111,7 +112,7 @@ INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
 (35, '12.jpg', 139286, 0),
 (36, '13.jpg', 113016, 18),
 (37, '14.jpg', 151814, 0),
-(38, '15.jpg', 112488, 1),
+(38, '15.jpg', 112488, 4),
 (48, '37ab2e826a9cda48b13ec2daa6852a10.jpg', 43825, 1);
 
 -- --------------------------------------------------------
@@ -147,17 +148,23 @@ CREATE TABLE `orders` (
   `id` int UNSIGNED NOT NULL,
   `cart_session_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL
+  `phone` varchar(255) NOT NULL,
+  `user_id` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`) VALUES
-(14, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 'Наталья', '56565968989'),
-(15, 'al026c0nbs2dtag9uju093etnc0hhor7', 'Наталья', '123'),
-(16, '82er91s1fp71kki45u8h1513ghugrq4u', 'Наталья', '43243424');
+INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`, `user_id`) VALUES
+(14, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 'Наталья', '56565968989', 1),
+(19, '0f7crk7pq5n53lbekl00c504leg57p7k', 'Светлана', '+79872744622', 2),
+(20, 'ki662tucq79edf4gqko1vi3qsfp9eks9', 'Светлана', '+79872744622', 2),
+(21, '6npjhk00n83s3dumhqh1u88mai94kou8', 'Светлана', '+79872744622', 2),
+(22, '5aac7nt6cajvuvgqibagtghagi44j454', 'Светлана', '+79872744622', 2),
+(23, 'f89v23b7t29k1psdrceqc0s1d6dtebrv', 'Светлана', '+79872744622', 2),
+(24, 'f89v23b7t29k1psdrceqc0s1d6dtebrv', 'Светлана', '+79872744622', 2),
+(25, 'semul27vtaregl8un41fen277q81auac', 'Наталья', '+7567765563', 1);
 
 -- --------------------------------------------------------
 
@@ -179,9 +186,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`, `likes`) VALUES
-(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 0),
-(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png', 0),
-(3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png', 0);
+(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 8),
+(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png', 5),
+(3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png', 3);
 
 -- --------------------------------------------------------
 
@@ -201,7 +208,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
-(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '1469420230615b7dc95619f9.29977962'),
+(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '17534440126162d13ddabcf1.91722773'),
 (2, 'user', '$2y$10$uVZXli9r1hxsmxv5qGdcNuPcKNmF3tFNVxzHFyJFgkdpcozuFTXf.', '89412248615a1d955e2887.37449076');
 
 --
@@ -259,13 +266,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT для таблицы `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=368;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=409;
 
 --
 -- AUTO_INCREMENT для таблицы `images`
@@ -283,7 +290,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `products`

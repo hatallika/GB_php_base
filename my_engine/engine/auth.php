@@ -51,3 +51,8 @@ function auth($login, $pass){
 
     return false;
 }
+
+function is_admin()
+{
+    return $_SESSION['login'] == 'admin';
+}

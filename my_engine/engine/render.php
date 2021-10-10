@@ -36,3 +36,4 @@ function renderTemplate($page, $params = []) {
     include TEMPLATE_DIR . $page .".php";
     return ob_get_clean();
 }
+
