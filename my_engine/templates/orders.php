@@ -4,8 +4,9 @@
 
         <a href="/order/?id=<?=$items['id']?>">Номер заказа: <?=$items['id']?> </a><br>
         <b>Получатель:</b> <?=$items['name']?> <br>
-        <b>Контактные данные:</b> <?=$items['phone']?>
-        <br>
+        <b>Контактные данные:</b> <?=$items['phone']?><br>
+        <b>Статус заказа:</b> <?=$items['status']?><br>
+
         <hr>
     <?php endforeach;?>
 <?php else:?>

@@ -7,7 +7,8 @@
             <h3>Список товаров:</h3>
             <?php foreach ($order as $product):?>
                <h3><?=$product['name']?></h3>
-               <img src="/img/<?= $product['image'] ?>" alt="<?=$product['name'] ?>" width="100"><br>
+               <img src="/img/<?=$product['image'] ?>" alt="<?=$product['name'] ?>" width="100"><br>
+                Цена: <?=$product['price'] ?><br>
                 Количество: <?=$product['quantity']?>
             <?php endforeach;?>
             <br>

@@ -11,13 +11,10 @@ function addOrder($session_id, $params){
 
 function getAllOrders(){
     $login = get_user();
-        return getAssocResult("SELECT orders.id as id, name, phone, cart_session_id
+        return getAssocResult("SELECT orders.id as id, name, phone, cart_session_id, status
                     FROM orders, users WHERE orders.user_id = users.id AND login = '{$login}'");
 }
 
-function getAllOrdersForAdmin(){
-    return getAssocResult("SELECT id, name, phone, cart_session_id FROM orders");
-}
 //получить детали заказ админу доступна детализация при любом id
 function getOrderDetails($id){
     $user = get_user();
@@ -35,7 +32,7 @@ function getOrderDetails($id){
 }
 
 function getCartFromOrder($session){
-    return getAssocResult("SELECT c.id as cart_id, c.product_id, p.name, p.price, p.image , c.quantity,
+    return getAssocResult("SELECT c.id as cart_id, c.product_id, p.name, c.fixed_price as price, p.image , c.quantity,
        o.id as order_id, o.name ordername, o.phone 
                         FROM products p JOIN cart c 
                         ON c.product_id = p.id AND c.session_id = '{$session}'

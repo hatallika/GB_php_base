@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Окт 10 2021 г., 15:57
+-- Время создания: Окт 11 2021 г., 02:23
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -31,25 +31,25 @@ CREATE TABLE `cart` (
   `id` int UNSIGNED NOT NULL,
   `product_id` int UNSIGNED NOT NULL,
   `session_id` varchar(255) NOT NULL,
-  `quantity` int UNSIGNED NOT NULL DEFAULT '1'
+  `quantity` int UNSIGNED NOT NULL DEFAULT '1',
+  `fixed_price` decimal(10,0) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `cart`
 --
 
-INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`) VALUES
-(37, 1, 'gvvsrub41do2pgd8hbhg4ho9cqtgqted', 3),
-(38, 3, 'gvvsrub41do2pgd8hbhg4ho9cqtgqted', 2),
-(50, 2, 'p5b16tum7t8d54vl79h93ohtoc4958tt', 4),
-(51, 1, 'oofk7klm954s09ocnq9ndehq93h2uhbo', 2),
-(52, 2, 'oofk7klm954s09ocnq9ndehq93h2uhbo', 1),
-(53, 1, '8o6jlreekcob0866bajihrggk7bir19r', 3),
-(55, 1, '0f7crk7pq5n53lbekl00c504leg57p7k', 3),
-(56, 2, '0f7crk7pq5n53lbekl00c504leg57p7k', 2),
-(58, 2, 'semul27vtaregl8un41fen277q81auac', 1),
-(59, 3, 'semul27vtaregl8un41fen277q81auac', 2),
-(60, 1, 'gpqm0h89b7tofjiu5dqch0joh9qu3lt9', 2);
+INSERT INTO `cart` (`id`, `product_id`, `session_id`, `quantity`, `fixed_price`) VALUES
+(65, 1, 'm9ga0rqd2odm3e68jshgrkld1c1cur31', 2, '150'),
+(66, 2, 'm9ga0rqd2odm3e68jshgrkld1c1cur31', 2, '200'),
+(67, 3, 'm9ga0rqd2odm3e68jshgrkld1c1cur31', 2, '100'),
+(68, 2, 'u8uvad3cbdlib621oavh20stv59hnlmj', 3, '200'),
+(69, 1, 'v25th8588lteko8uh1bmsohv6sjoi2ln', 3, '100'),
+(70, 2, 'v25th8588lteko8uh1bmsohv6sjoi2ln', 3, '150'),
+(71, 2, 'kv7i357p4lpmdm38gtklrdeha48o7r9j', 1, '150'),
+(72, 3, 'kv7i357p4lpmdm38gtklrdeha48o7r9j', 2, '100'),
+(73, 1, 'at6vnkp5ns4so76o75lk19dktg7dsagd', 3, '200'),
+(74, 3, 'at6vnkp5ns4so76o75lk19dktg7dsagd', 2, '250');
 
 -- --------------------------------------------------------
 
@@ -77,8 +77,8 @@ INSERT INTO `feedback` (`id`, `name`, `feedback`, `product_id`) VALUES
 (374, 'Светлана', 'Привет', 0),
 (380, 'Наталья', 'Очень вкусная!', 1),
 (404, 'Сергей', 'Еще одну пиццу, пожалуйста!', 1),
-(407, 'Сергей', 'привет', 0),
-(408, 'Сергей', 'А я люблю с грибами!', 1);
+(407, 'Сергей', 'Классный магазин!', 0),
+(408, 'Сергей+', 'А я люблю с грибами!', 1);
 
 -- --------------------------------------------------------
 
@@ -110,10 +110,11 @@ INSERT INTO `images` (`id`, `name`, `size`, `views`) VALUES
 (32, '10.jpg', 97127, 0),
 (33, '11.jpg', 98579, 0),
 (35, '12.jpg', 139286, 0),
-(36, '13.jpg', 113016, 18),
+(36, '13.jpg', 113016, 20),
 (37, '14.jpg', 151814, 0),
 (38, '15.jpg', 112488, 4),
-(48, '37ab2e826a9cda48b13ec2daa6852a10.jpg', 43825, 1);
+(48, '37ab2e826a9cda48b13ec2daa6852a10.jpg', 43825, 1),
+(49, '117494b0ac53a9d09eabd8c59da47819.jpg', 133560, 4);
 
 -- --------------------------------------------------------
 
@@ -149,22 +150,19 @@ CREATE TABLE `orders` (
   `cart_session_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `user_id` int UNSIGNED DEFAULT NULL
+  `user_id` int UNSIGNED DEFAULT NULL,
+  `status` enum('processing','complete','cancel','waiting') NOT NULL DEFAULT 'processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`, `user_id`) VALUES
-(14, '8mcf4vk11tlmagkdnha7n7725mvhrs0n', 'Наталья', '56565968989', 1),
-(19, '0f7crk7pq5n53lbekl00c504leg57p7k', 'Светлана', '+79872744622', 2),
-(20, 'ki662tucq79edf4gqko1vi3qsfp9eks9', 'Светлана', '+79872744622', 2),
-(21, '6npjhk00n83s3dumhqh1u88mai94kou8', 'Светлана', '+79872744622', 2),
-(22, '5aac7nt6cajvuvgqibagtghagi44j454', 'Светлана', '+79872744622', 2),
-(23, 'f89v23b7t29k1psdrceqc0s1d6dtebrv', 'Светлана', '+79872744622', 2),
-(24, 'f89v23b7t29k1psdrceqc0s1d6dtebrv', 'Светлана', '+79872744622', 2),
-(25, 'semul27vtaregl8un41fen277q81auac', 'Наталья', '+7567765563', 1);
+INSERT INTO `orders` (`id`, `cart_session_id`, `name`, `phone`, `user_id`, `status`) VALUES
+(30, 'm9ga0rqd2odm3e68jshgrkld1c1cur31', 'Сергей', '222243454543', 1, 'waiting'),
+(31, 'u8uvad3cbdlib621oavh20stv59hnlmj', 'Сергей', '3242424242424', 1, 'cancel'),
+(32, 'v25th8588lteko8uh1bmsohv6sjoi2ln', 'Светлана', '232323232', 2, 'processing'),
+(33, 'kv7i357p4lpmdm38gtklrdeha48o7r9j', 'Гость Сергей', '3433423432', NULL, 'processing');
 
 -- --------------------------------------------------------
 
@@ -186,8 +184,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `image`, `likes`) VALUES
-(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 8),
-(2, 'Чай', 'Цейлонский чай', '150.00', 'tea.png', 5),
+(1, 'Пицца', 'С сыром и грибами', '200.00', 'pizza.jpg', 10),
+(2, 'Чай', 'Цейлонский чай', '70.00', 'tea.png', 5),
 (3, 'Кофе', 'Кофе молотый', '250.00', 'coffee.png', 3);
 
 -- --------------------------------------------------------
@@ -208,7 +206,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `pass`, `hash`) VALUES
-(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '17534440126162d13ddabcf1.91722773'),
+(1, 'admin', '$2y$10$DXOQvi165r4Oct..djxupuxzhwwTkxURsBUgj05uEfzTFziMhEXuK', '26755861561635e832b1ce6.97478761'),
 (2, 'user', '$2y$10$uVZXli9r1hxsmxv5qGdcNuPcKNmF3tFNVxzHFyJFgkdpcozuFTXf.', '89412248615a1d955e2887.37449076');
 
 --
@@ -266,7 +264,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT для таблицы `feedback`
@@ -278,7 +276,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT для таблицы `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT для таблицы `news`
@@ -290,7 +288,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT для таблицы `products`

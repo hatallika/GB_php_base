@@ -28,10 +28,11 @@ function deleteOneItem($session_id, $product_id){
 function addToCart($id){
     $session_id = session_id();
     $id = (int)$id;
+    $fixprice = getOneResult("SELECT price FROM products WHERE id = {$id}")['price'];
     //если товар уже есть в корзине, увеличим его количество, иначе добавим его в корзину.
     $result = mysqli_query(getDb(), "SELECT product_id FROM cart WHERE session_id = '{$session_id}' && product_id = '{$id}'" );
     if(mysqli_num_rows($result) == 0) {
-        executeSql("INSERT INTO cart (session_id, product_id) VALUES ('{$session_id}', '{$id}')");
+        executeSql("INSERT INTO cart (session_id, product_id, fixed_price) VALUES ('{$session_id}', '{$id}', '{$fixprice}')");
     } else {
         executeSql("UPDATE cart SET quantity = quantity + 1 WHERE session_id = '{$session_id}' && product_id = '{$id}'");
     }

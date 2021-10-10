@@ -37,7 +37,15 @@ function prepareVariables($page, $action=""){
             if(!is_admin()){
                 die("Доступ запрещен");
             }
+            if($action == 'changestatus'){
+                changeOrderStatus();
+                header("Location: /admin/" );
+                die();
+            }
+
             $params['orders'] = getAllOrdersForAdmin();
+            $params['message_status'] = getSessionMessage('message_status');
+
             break;
 
         case 'index':
