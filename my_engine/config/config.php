@@ -11,7 +11,7 @@ define('PASS', '12345');
 define('DB', 'gb1');
 
 //библиотеки
-include "../engine/lib/classSimpleImage.php";// библиотека ресайза
+include DOCUMENT_ROOT . "/engine/lib/classSimpleImage.php";// библиотека ресайза
 
 //
 

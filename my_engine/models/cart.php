@@ -16,13 +16,19 @@ function addOneItem($session_id, $product_id){
 }
 //уменьшить количество товара на 1
 function deleteOneItem($session_id, $product_id){
-    $result = getOneResult("SELECT quantity, id FROM cart WHERE product_id = {$product_id} AND session_id = '{$session_id}'");
+    $result = getOneResult("SELECT quantity, product_id FROM cart WHERE product_id = {$product_id} AND session_id = '{$session_id}'");
 
     if ($result['quantity'] > 1){
         executeSql("UPDATE cart SET quantity = quantity - 1 WHERE product_id = {$product_id} AND session_id = '{$session_id}'");
     } else {
-        deleteFromCart($result['id'], $session_id);
+        deleteFromCart($result['product_id']);
     }
+}
+
+function getQntValue($id){
+    $id=(int)$id;
+    $session = session_id();
+    return getOneResult("SELECT quantity from cart WHERE product_id = {$id} AND session_id='{$session}'")['quantity'] ;
 }
 
 function addToCart($id){
@@ -41,7 +47,8 @@ function addToCart($id){
 function deleteFromCart($id){
     $session_id = session_id();
     $id = (int)$id;
-    executeSql("DELETE FROM cart WHERE id = {$id} AND session_id = '{$session_id}'"); //Сессия не нужна так как id уникальный
+
+    executeSql("DELETE FROM cart WHERE product_id = {$id} AND session_id = '{$session_id}'");
 }
 
 function totalPrice($session_id){

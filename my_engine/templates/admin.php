@@ -5,7 +5,7 @@
         <b>Получатель:</b> <?=$item['name']?> <br>
         <b>Контактные данные:</b> <?=$item['phone']?><br>
         <b>Статус заказа:</b>
-        <?=$message_status?>
+        <?=$_SESSION['message_status'.$item['id']]?>
         <form action="/admin/changestatus/" method="post">
             <input type="text" name="order_id" value="<?=$item['id']?>" hidden>
             <select name="status">
@@ -16,6 +16,7 @@
             </select>
             <input type="submit" name="change" value="Изменить">
         </form>
+        <?php unset($_SESSION['message_status'.$item['id']]);?>
         <hr>
     <?endforeach;?>
 </div>

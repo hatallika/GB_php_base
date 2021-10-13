@@ -12,7 +12,7 @@ function addOrder($session_id, $params){
 function getAllOrders(){
     $login = get_user();
         return getAssocResult("SELECT orders.id as id, name, phone, cart_session_id, status
-                    FROM orders, users WHERE orders.user_id = users.id AND login = '{$login}'");
+                    FROM orders, users WHERE orders.user_id = users.id AND login = '{$login}' ORDER BY id DESC");
 }
 
 //получить детали заказ админу доступна детализация при любом id

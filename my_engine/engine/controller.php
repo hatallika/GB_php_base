@@ -3,13 +3,18 @@
 function prepareVariables($page, $action=""){
     //Controller
     global $menuItems;
-    $params = [
+   /*$params = [
         'menu' => $menuItems,
         'counter' => getBasketCount(),
         'layout' => 'main',
         'auth' => isAuth(),
         'name' => get_user(),
-    ];
+    ];*/
+    $params['menu'] = $menuItems;
+    $params['counter'] = getBasketCount();
+    $params['layout'] = 'main';
+    $params['auth'] = isAuth();
+    $params['name'] = get_user();
 
     switch ($page) {
         case 'api':
@@ -26,19 +31,36 @@ function prepareVariables($page, $action=""){
                 die();
             }
             if ($action == 'delete'){
+                $session_id= session_id();
                 deleteFromCart($_GET['id']);
-                echo json_encode(['counter' => getBasketCount()]);
+                echo json_encode(['counter' => getBasketCount(),'countCartItems' => getBasketCount(),'totalPrice' => totalPrice($session_id)]);
+                die();
+            }
+            if($action == 'addqnt'){
+                $session_id = session_id();
+                addOneItem($session_id,$_GET['id']);
+                echo json_encode(['quantity' => getQntValue($_GET['id']),'countCartItems' => getBasketCount(),
+                    'totalPrice' => totalPrice($session_id)]);
+                die();
+            }
+
+            if($action == 'delqnt'){
+                $session_id = session_id();
+                deleteOneItem($session_id,$_GET['id']);
+                echo json_encode(['quantity' => getQntValue($_GET['id']),'countCartItems' => getBasketCount(),
+                    'totalPrice' => totalPrice($session_id)]);
                 die();
             }
             break;
 
         case 'admin':
-            $session = session_id();
+
             if(!is_admin()){
                 die("Доступ запрещен");
             }
             if($action == 'changestatus'){
                 changeOrderStatus();
+
                 header("Location: /admin/" );
                 die();
             }
