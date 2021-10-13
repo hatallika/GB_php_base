@@ -1,6 +1,8 @@
 <?php
 define('TEMPLATE_DIR', '../templates/');
 define('LAYOUTS_DIR', 'layouts/');
+define('ENGINE_DIR', '../engine/');
+define('MODELS_DIR', '../models/');
 
 /*DB config*/
 define('HOST', 'localhost:3307');
@@ -12,18 +14,13 @@ define('DB', 'gb1');
 include DOCUMENT_ROOT . "/engine/lib/classSimpleImage.php";// библиотека ресайза
 
 //
+
+include DOCUMENT_ROOT . "/engine/functions.php";
 include DOCUMENT_ROOT . "/engine/controller.php";
 include DOCUMENT_ROOT . "/engine/render.php";
 include DOCUMENT_ROOT . "/engine/auth.php";
-include DOCUMENT_ROOT . "/models/catalog.php";
-include DOCUMENT_ROOT . "/models/menu.php";
-include DOCUMENT_ROOT . "/models/log.php";
-include DOCUMENT_ROOT . "/models/files.php";
-include DOCUMENT_ROOT . "/models/gallery.php"; // модуль галереи
 include DOCUMENT_ROOT . "/engine/db.php";
-include DOCUMENT_ROOT . "/models/news.php";
-include DOCUMENT_ROOT . "/models/setup.php";
-include DOCUMENT_ROOT . "/models/feedback.php";
+autoIncludeFromDir(MODELS_DIR); // подключаем файлы автоматически из папки models
 
 //menu
 $menuItems = [
@@ -33,7 +30,17 @@ $menuItems = [
     ],
     [
         'url' => '/catalog',
-        'name' => 'Каталог'
+        'name' => 'Каталог',
+        'submenu' => [
+            [
+                'url' => '/cart',
+                'name' => 'Корзина<span class="counter"> ('.(getBasketCount()?:'нет товаров').')</span>'
+            ],
+            [
+                'url' => '/orders',
+                'name' => 'Мои заказы'
+            ],
+        ]
     ],
     [
         'url' => '/about',
@@ -46,7 +53,17 @@ $menuItems = [
     [
         'url' => '/feedback',
         'name' => 'Отзывы'
-    ]
+    ],
+    //getAdminMenu()
 ];
+if(is_admin()){
+    array_push($menuItems, [
+        'url' => '/admin',
+        'name' => 'Админка'
+    ]);
+}
 
+
+$action ="";
+//$messages = include "../config/messages.php";
 

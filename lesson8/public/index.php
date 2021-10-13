@@ -1,0 +1,45 @@
+<?php
+//error_reporting(E_ALL);
+session_start();
+//__DIR__ //dirname(__DIR__)
+define("DOCUMENT_ROOT", dirname(__DIR__)); //получили путь выше public
+include DOCUMENT_ROOT . "/config/config.php"; // подключили файл конфигурации
+
+
+//Роутер. Читаем действие которое хочет сделать пользователь
+//Читаем параметр page is url, чтобы определить, какую страницу-шаблон хочет видеть пользователь
+//По умолчанию index
+
+
+$url_array = explode('/', $_SERVER['REQUEST_URI']);
+$action = $url_array[2];
+if ($url_array[1] == "") {
+    $page = 'index';
+} else {
+    $page = $url_array[1];
+}
+
+//Контроллер
+$params = prepareVariables($page, $action);
+
+//_log($params, 'params');
+echo render($page, $params);
+
+
+/*
+ *  $params = [
+        'menu' => $menuItems,
+        'counter' => getBasketCount(),
+        'layout' => 'main',
+        'auth' => isAuth(),
+        'name' => get_user(),
+    ];
+ *
+ * $controllerName = $page . "Controller";
+
+if(function_exists($controllerName)){
+    echo $controllerName($params, $action);
+} else {
+    die("Не правильный контроллер");
+}*/
+
